@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+#root{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    height: 100vh;
+}
+
+#button-section{
+    display: block;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    position: relative; 
+    width: 350px;
+    margin-top: 250px;
+    z-index: 99999;
+}
+
+.btn{
+    border: none;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px 32px;
+    margin: 16px;
+    background-color: transparent;
+    font-size: 24px;
+    color: #ffff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover{
+    opacity: 0.8;
+}
+
+.btn--success{
+    background-color: #28a745;
+}
+
+.btn--error{
+    background-color: #dc3545;
+}
+
+/* Toast */
+#toast{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.toast{
+    height: 80px;
+    width: 350px;
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    padding: 20px 10px;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: space-between;
+    animation: sildeIn linear 0.4s, fadeOut linear .5s 3s forwards;
+}
+
+@keyframes sildeIn{
+    from{
+        opacity: 0.4;
+        transform: translateX(calc(100% + 20px));
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut{
+    to{
+        opacity: 0;
+    }
+}
+
+.toast__icon{
+    font-size: 32px;
+    line-height: 60px;
+    padding-left: 12px;
+}
+
+.toast--success .toast__icon{
+    color: #28a745;
+    border-left: 4px solid #28a745;
+}
+
+.toast--error .toast__icon{
+    color: #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+.toast__content{
+    margin: 0 10px;
+    font-weight: bold;
+    text-align: flex;
+    line-height: 30px;
+    min-width: 220px;
+}
+
+.toast__content p{
+    opacity: 0.5;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.toast__close{
+    margin-left: 8px;
+    opacity: 0.5;
+    cursor: pointer;
+    padding: 4px;
+}

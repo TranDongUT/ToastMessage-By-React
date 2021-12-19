@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>React/Bem</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div id="toast-section"></div>
+        <div id="button-section"></div>
+    </div> 
+</body>
+
+
+<script type="text/babel">
+
+    /* component: button */
+    function Button({handleClick}){
+        return (
+            <div>
+                <button className='btn btn--success' onClick= {() => handleClick('success')}>Success</button>
+                <button className='btn btn--error' onClick= {() => handleClick('error')}>Error</button>
+            </div>
+        )
+    }
+
+    /* component: Toast */
+    function Toast({toastList}){
+
+        const autoRemove = setTimeout(()=>{
+            const toast = document.querySelector('.toast');
+            if(toast){
+                document.querySelector('#toast').removeChild(toast)
+            }
+        },4000)
+
+        const removeToast = (toastID) => {
+            document.querySelector(`#${toastID}`).remove()
+            clearTimeout(autoRemove);
+        }
+
+        return (
+            <div id="toast">
+                {
+                    toastList.map((toastProps,index) => {
+                        return (
+                            <div id={true ? 'toast-'+index : null} className={toastProps.status}>
+                                <div className="toast__icon"><i className={toastProps.icon}></i></div>
+                                <div className="toast__content">
+                                    <h2>{toastProps.title}</h2>
+                                    <p>{toastProps.content}</p>
+                                </div>
+                                <div className="toast__close" onClick = {() => removeToast(true ? 'toast-'+index : null)}><i className="fas fa-times"></i></div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+
+
+    function App(){ 
+
+        const [toastList,setList] = React.useState([]);
+
+        let toastItem = {
+                status: '',
+                title: '',
+                content: '',
+                icon: '',
+        }
+
+        const handleClick = (type) =>{
+            if(type == 'success'){
+                toastItem.status = "toast toast--success"
+                toastItem.title = 'Success'
+                toastItem.content = 'Thành công rồi đó'
+                toastItem.icon = 'fas fa-check-circle'
+            }
+            else if(type == 'error'){
+                toastItem.status = "toast toast--error"
+                toastItem.title = 'Error'
+                toastItem.content = 'Oh Noooo............. Error rồi'
+                toastItem.icon = 'fas fa-exclamation-circle'
+            }
+            setList([...toastList,toastItem])
+        }
+
+        return (
+            <div id="app">
+                <div id="button-section">
+                    <Button handleClick ={handleClick}/>
+                </div>
+                <div id="toast-section">
+                    <Toast toastList = {toastList}/>
+                </div>
+            </div>
+        )
+    }
+    ReactDOM.render(<App/>,document.querySelector('#root'))
+</script>
+</html>
